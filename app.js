@@ -9,11 +9,17 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 
-app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "http://doner-client.herokuapp.com")
+app.use(function (req, res, next) {
+    var whitelist = ['http://localhost:8080', 'http://doner-client.herokuapp.com']
+    var origin = req.get('origin');
+    whitelist.forEach(function (val, key) {
+        if (origin.indexOf(val) > -1) {
+            res.setHeader('Access-Control-Allow-Origin', origin);
+        }
+    })
     res.header("Access-Control-Allow-Headers", "Content-Type")
     next();
-  });
+});
 
 app.post('/sendmail', (req, res) => {
     const output = `
@@ -50,4 +56,5 @@ app.post('/sendmail', (req, res) => {
         res.json('Email sent')
     })
 })
+
 app.listen(process.env.PORT || 3000, () => console.log('Server started...'));
