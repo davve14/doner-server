@@ -10,7 +10,7 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 
 app.use(function (req, res, next) {
-    var whitelist = ['http://localhost:8080', 'http://doner-client.herokuapp.com']
+    var whitelist = ['http://localhost:8080', 'http://doner-client.herokuapp.com','https://doner-client.herokuapp.com']
     var origin = req.get('origin');
     whitelist.forEach(function (val, key) {
         if (origin.indexOf(val) > -1) {
@@ -25,7 +25,7 @@ app.post('/sendmail', (req, res) => {
     const output = `
       <h2>New message from Berlin Döner DB</h2>
       <h3>Contact Details</h3>
-      <ul>  
+      <ul>
         <li>Name: ${req.body.name}</li>
         <li>Email: ${req.body.email}</li>
       </ul>
